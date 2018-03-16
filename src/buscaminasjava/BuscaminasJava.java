@@ -16,33 +16,23 @@ public class BuscaminasJava {
      */
     public static void main(String[] args) {
 
-        int ancho = 3;
-        int largo = 3;
-        int minas = 1;
-
-        Tablero miTablero = new Tablero(ancho, largo);
-        miTablero.llenarTablero(minas);
-
-        for (Celda[] miFila : miTablero.misCeldas) {
-            for (Celda unaCelda : miFila) {
-                if (unaCelda.getMiBomba() != null) {
-                    System.out.print("|  1  |");
-                } else {
-                    System.out.print("|     |");
-                }
-            }
-             System.out.println("");
-        }
         
-        System.out.println("");
-        
-        for (Celda[] miFila : miTablero.misCeldas) {
-            for (Celda unaCelda : miFila) {
-                System.out.print("|  "+unaCelda.getBombasAlrededor()+"  |");
-            }
-             System.out.println("");
+
+        Juego miJuego;
+
+        switch (args[0].toUpperCase()) {
+            case "GUI":
+                miJuego = new JuegoGráfico();
+                break;
+            case "CONSOLE":
+                miJuego = new JuegoConsola();
+                break;
+            default:
+                miJuego = new JuegoTest();
+                break;
         }
 
+        miJuego.iniciarJuego();
     }
 
 }

@@ -16,6 +16,11 @@ public class Celda {
     private boolean estado;
     private int bombasAlrededor;
 
+    public Celda() {
+        this.estado = false;
+    }
+
+    
     public Mina getMiBomba() {
         return miBomba;
     }

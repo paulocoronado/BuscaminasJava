@@ -22,7 +22,11 @@ public class Tablero {
         miSembrador.contarMinas(misCeldas);
     }
 
-    
+    void cambiarEstadoCeldas(int fila, int columna){
+        
+        miSembrador.cambiarEstado(misCeldas, fila, columna);
+        
+    }
     
     public Tablero(int ancho, int largo){
         

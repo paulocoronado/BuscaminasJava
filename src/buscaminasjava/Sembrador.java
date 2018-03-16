@@ -49,7 +49,7 @@ public class Sembrador {
                 if (celdas[fila][columna].getMiBomba() == null) {
 
                     totalBombas = sumarBombas(celdas, fila, columna);
-                        celdas[fila][columna].setBombasAlrededor(totalBombas);
+                    celdas[fila][columna].setBombasAlrededor(totalBombas);
 
                 }
 
@@ -68,7 +68,7 @@ public class Sembrador {
 
                 casillaValida = validarCasilla(fila, columna, x, y);
 
-                if (casillaValida && matriz[fila + x][columna + y].getMiBomba()!=null) {
+                if (casillaValida && matriz[fila + x][columna + y].getMiBomba() != null) {
                     total++;
                 }
             }
@@ -102,4 +102,28 @@ public class Sembrador {
 
         return filaValida && columnaValida;
     }
+
+    void cambiarEstado(Celda matriz[][], int fila, int columna) {
+        
+        boolean casillaValida;
+        int x, y;
+        
+        matriz[fila][columna].setEstado(true);
+
+        for (x = -1; x < 2; x++) {
+            for (y = -1; y < 2; y++) {
+
+                casillaValida = validarCasilla(fila, columna, x, y);
+
+                if (casillaValida && !matriz[fila + x][columna + y].isEstado()&& matriz[fila + x][columna + y].getMiBomba() == null) {
+                    
+                    cambiarEstado(matriz, fila+x, columna+y);
+                }
+                
+                
+            }
+        }
+
+    }
+
 }
