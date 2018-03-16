@@ -15,6 +15,7 @@ public class Sembrador {
 
     int filas;
     int columnas;
+    boolean casillaValida;
 
     void sembrarMinas(int minas, Celda celdas[][]) {
 
@@ -57,10 +58,19 @@ public class Sembrador {
         }
 
     }
+    
+    void cambiarEstado(Celda matriz[][], int fila, int columna) {
 
-    int sumarBombas(Celda matriz[][], int fila, int columna) {
+        //Cambiar el estado de la Celda
+        matriz[fila][columna].setEstado(true);
 
-        boolean casillaValida;
+        if (matriz[fila][columna].getBombasAlrededor() == 0) {
+            cambiarEstadoCeldasContiguas(matriz, fila, columna);
+        }
+    }
+
+    private int sumarBombas(Celda matriz[][], int fila, int columna) {
+
         int total = 0, x, y;
 
         for (x = -1; x < 2; x++) {
@@ -78,52 +88,44 @@ public class Sembrador {
 
     }
 
-    boolean validarCasilla(int fila, int columna, int x, int y) {
+    private boolean validarCasilla(int fila, int columna, int x, int y) {
 
         boolean filaValida, columnaValida;
 
         if (x < 0) {
-
             filaValida = (fila + x) > -1;
-
         } else {
-
             filaValida = (fila + x) < filas;
         }
 
         if (y < 0) {
-
             columnaValida = (columna + y) > -1;
-
         } else {
-
             columnaValida = (columna + y) < columnas;
         }
-
         return filaValida && columnaValida;
     }
 
-    void cambiarEstado(Celda matriz[][], int fila, int columna) {
-        
-        boolean casillaValida;
-        int x, y;
-        
-        matriz[fila][columna].setEstado(true);
+    
 
+    private void cambiarEstadoCeldasContiguas(Celda matriz[][], int fila, int columna) {
+        
+        int x, y;
         for (x = -1; x < 2; x++) {
             for (y = -1; y < 2; y++) {
 
                 casillaValida = validarCasilla(fila, columna, x, y);
-
-                if (casillaValida && !matriz[fila + x][columna + y].isEstado()&& matriz[fila + x][columna + y].getMiBomba() == null) {
-                    
-                    cambiarEstado(matriz, fila+x, columna+y);
+                if (casillaValida
+                        && matriz[fila + x][columna + y].getBombasAlrededor() == 0
+                        && !matriz[fila + x][columna + y].isEstado()
+                        && matriz[fila + x][columna + y].getMiBomba() == null) {
+                    cambiarEstado(matriz, fila + x, columna + y);
+                } else if (casillaValida) {
+                    matriz[fila + x][columna + y].setEstado(true);
                 }
-                
-                
+
             }
         }
 
     }
-
 }
